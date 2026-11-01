@@ -1,0 +1,4 @@
+requests>=2.31
+pycryptodome>=3.20
+mutagen>=1.47
+pytest>=8.0

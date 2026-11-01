@@ -1,0 +1,62 @@
+# 本地音乐管理工具配置（绿色软件：全部路径相对本文件所在目录）
+# 修改后无需重启，下一次命令即生效。
+
+[paths]
+library = "library"      # 正式库（只增不减，绝不自动删除）
+staging = "staging"      # 暂存区：下载/清洗/校验都在这里
+data = "data"            # 数据库与日志
+
+[naming]
+# 文件名严格由歌单元数据生成：{title} {artist} {album} {song_id} {track}
+template = "{title} - {artist}"
+max_length = 120
+
+[match]
+# 严格双维匹配：名称归一化后完全相等 + 时长差值在容差内（毫秒）
+duration_tolerance_ms = 2000
+# 假无损警戒线：无损格式码率低于此值即转人工审批
+min_lossless_bitrate_kbps = 600
+
+[download]
+# 频率安全：搜索/下载各自独立限速 + 滑动窗口 + 连续失败退避
+search_interval_s = 1.2
+download_interval_s = 1.5
+window_max_requests = 10
+window_seconds = 60
+max_consecutive_failures = 3
+backoff_base_s = 5.0
+# 音质优先级：无损优先；无损不可得时绝不自动降级
+preferred_formats = ["flac", "wav", "ape"]
+# 执行器顺序即「主源 → 备源」。留空 = 不启用任何下载源（doctor 会提示）。
+executors = []
+
+# ---- 接入真实下载源（示例，按需取消注释）----
+# 三种执行器：exec=命令行下载器 / dir=扫描下载目录 / fake=离线演示清单
+#
+# ① musicDownload（命令行工具）：用它的搜索/下载参数包成 exec
+#    先把 --help 里真实的搜索、按 id 下载参数填进来
+# [executors.musicdownload]
+# kind = "exec"
+# search_cmd = "python D:/tools/musicDownload/main.py search --json {query}"
+# fetch_cmd  = "python D:/tools/musicDownload/main.py download --id {cand_id} -o {output}"
+#
+# ② 洛雪音乐助手（GUI 版，没有 CLI）：让它把歌下到固定目录，这里扫目录当源
+# [executors.luoxue]
+# kind = "dir"
+# path = "D:/Music/lx-download"
+# recursive = true
+#
+# ③ 任意其他命令行下载器照 ① 的写法追加即可（顺序即主源 → 备源）
+#
+# ---- 离线联调用的本地假源（见 demo.toml / tools/make_demo.py）----
+# [executors.fake]
+# kind = "fake"
+# manifest = "demo/manifest.json"
+
+[netease]
+api_base = "https://music.163.com"
+timeout_s = 15
+
+[ui]
+# 喜欢栏中失效歌曲置底灰色显示（与网易云客户端一致）
+invalid_at_bottom = true

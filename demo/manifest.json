@@ -1,0 +1,39 @@
+{
+ "songs": [
+  {
+   "id": "s1",
+   "title": "晴天",
+   "duration_ms": 8000,
+   "format": "wav",
+   "file": "source/track01.flac.wav"
+  },
+  {
+   "id": "s2",
+   "title": "夜曲",
+   "duration_ms": 8000,
+   "format": "mp3",
+   "file": ""
+  },
+  {
+   "id": "s3",
+   "title": "七里香 (Live)",
+   "duration_ms": 8000,
+   "format": "wav",
+   "file": "source/track03.wav"
+  },
+  {
+   "id": "s4",
+   "title": "稻香",
+   "duration_ms": 8000,
+   "format": "wav",
+   "file": "source/track04_long.wav"
+  },
+  {
+   "id": "s5",
+   "title": "告白气球",
+   "duration_ms": 8000,
+   "format": "wav",
+   "file": "source/track05.wav"
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+# 本地音乐库管理工具（nm）配置
+# 绿色软件：所有相对路径都相对本文件所在目录（即 nm.exe 同级）
+
+[paths]
+library = "library"      # 正式库（只增不减）
+staging = "staging"      # 暂存区（下载/清洗/校验）
+data = "data"            # 数据库与日志
+
+[naming]
+template = "{title} - {artist}"
+max_length = 120
+
+[match]
+# 严格双维匹配：名称归一化后完全相等 + 时长差 ≤ 该容差（毫秒）
+duration_tolerance_ms = 2000
+# 假无损警戒线：无损格式码率低于此值转人工审批
+min_lossless_bitrate_kbps = 600
+
+[download]
+# 内置网易云源（零外部依赖，只需登录一次）
+# 有第二来源时按 "主源", "备源" 顺序写，例如 executors = ["netease", "luoxue"]
+executors = ["netease"]
+search_interval_s = 0.8
+download_interval_s = 1.0
+window_max_requests = 10
+window_seconds = 60
+max_consecutive_failures = 5
+preferred_formats = ["flac", "wav", "ape"]
+
+[executors.netease]
+kind = "netease"
+
+# ---- 备源示例：洛雪音乐助手（GUI 版）下载目录 ----
+# [executors.luoxue]
+# kind = "dir"
+# path = "D:/Music/lx-download"
+
+# ---- 备源示例：命令行下载器（需它自己的搜索/下载命令）----
+# [executors.musicdownload]
+# kind = "exec"
+# search_cmd = "python D:/tools/musicDownload/main.py search --json {query}"
+# fetch_cmd  = "python D:/tools/musicDownload/main.py download --id {cand_id} -o {output}"
+
+[netease]
+api_base = "https://music.163.com"
+timeout_s = 15
+
+[ui]
+invalid_at_bottom = true

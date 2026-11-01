@@ -1,0 +1,15 @@
+# 演示配置：不用 Cookie、不联网，只用本地假源
+[paths]
+library = "demo/library"
+staging = "demo/staging"
+data = "demo/data"
+
+[download]
+executors = ["fake"]
+search_interval_s = 0
+download_interval_s = 0
+max_consecutive_failures = 99
+
+[executors.fake]
+kind = "fake"
+manifest = "demo/manifest.json"
